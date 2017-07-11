@@ -69,6 +69,7 @@ export function reducer(prevState = initialState, action) {
 
     if (totalCredit < itemPrice) {
       newState.displayMessage = 'PLEASE INSERT MORE MONEY';
+      return newState
     }
 
     const quantity = prevState.stock[prevState.selection].quantity;
@@ -77,8 +78,15 @@ export function reducer(prevState = initialState, action) {
 
     if (quantity < 1) {
      newState.displayMessage = `${item} - OUT OF STOCK`;
+     return newState
     }
-    return newState;
+
+    newState.stock = Object.assign({}, newState.stock)
+    newState.stock[prevState.selection] = Object.assign({}, newState.stock[prevState.selection]);
+    newState.stock[prevState.selection].quantity = newState.stock[prevState.selection].quantity -1;
+    return newState
+  
+
 
   }
  return prevState;
