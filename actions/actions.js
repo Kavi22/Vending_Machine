@@ -6,3 +6,12 @@ export function insertCoin(coin) {
     coin
   };
 }
+
+export function replenishStock(code, quantity) {
+  return {
+    type: types.REPLENISH_STOCK,
+    code,
+    quantity
+  };
+}
+

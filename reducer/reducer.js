@@ -43,5 +43,14 @@ export function reducer(prevState = initialState, action) {
     return newState;
   }
 
+  if (action.type === types.REPLENISH_STOCK) {
+    if (!action.code || !action.quantity) return prevState;
+    const newState = Object.assign({}, prevState);
+    newState.stock = Object.assign({}, newState.stock);
+    newState.stock[action.code] = Object.assign({}, newState.stock[action.code]);
+    newState.stock[action.code].quantity += action.quantity;
+    return newState;
+  }
+
 
 }

@@ -1,1 +1,2 @@
 export const INSERT_COIN = 'INSERT_COIN';
+export const REPLENISH_STOCK = 'REPLENISH_STOCK';

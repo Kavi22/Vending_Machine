@@ -11,4 +11,13 @@ describe('Actions', ()=> {
       });
     });
   });
+  describe('REPLENISH_STOCK', ()=> {
+    it('returns correct action', ()=> {
+      expect(actions.replenishStock('A1',10)).to.eql({
+        type: types.REPLENISH_STOCK,
+        code: 'A1',
+        quantity: 10
+      });
+    });
+  });
 });

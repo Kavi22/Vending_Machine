@@ -18,4 +18,17 @@ describe('Reducer', ()=> {
       expect(newState.credit).to.not.equal(initialState.credit);
     });
   });
+  describe('action: Replenish Stock', () => {
+    it('updates the state correctly', () => {
+      const action = actions.replenishStock('A1', 10);
+      const newState = reducer(initialState, action);
+      expect(newState.stock[action.code].quantity).to.eql(20);
+    });
+    it('does not mutate the initial state', () => {
+      const action = actions.replenishStock('A1', 10);
+      const newState = reducer(initialState, action);
+      expect(newState.stock).to.not.equal(initialState.stock);
+      expect(newState.stock[action.code].quantity).to.not.equal(initialState.stock[action.code].quantity);
+    });
+  });
 });
