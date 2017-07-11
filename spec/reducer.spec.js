@@ -169,4 +169,35 @@ describe('Reducer', () => {
       expect(newState.productDispenser).to.equal('A1');
     });
   });
+
+  it('updates state with correct change', () => {
+    const initialState5 = {
+      stock: {
+        'A1': {
+          name: 'MarsBar',
+          quantity: 10,
+          price: 0.85
+        }
+      },
+      credit: [0.5, 0.5],
+      change: {},
+      float: {
+        '0.5': 5,
+        '0.10': 5,
+        '0.20': 5,
+        '0.50': 10,
+        '1': 20
+      },
+      displayMessage: '',
+      selection: 'A1',
+      productDispenser: '',
+      power: true
+    };
+    const action = actions.confirmPurchase(true);
+    const newState = reducer(initialState5, action);
+    expect(newState.change).to.eql({
+        '0.10': 1,
+        '0.05': 1
+      });
+  });
 });

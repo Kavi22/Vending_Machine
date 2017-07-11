@@ -22,6 +22,7 @@ export const initialState = {
   credit: [],
   change: {},
   float: {
+    '0.5' : 5,
     '0.10': 5,
     '0.20': 5,
     '0.50': 10,
@@ -70,7 +71,7 @@ export function reducer(prevState = initialState, action) {
     // IF MACHINE DOES NOT HAVE ENOUGH CREDIT
     if (totalCredit < itemPrice) {
       newState.displayMessage = 'PLEASE INSERT MORE MONEY';
-      return newState
+      return newState;
     }
 
     const quantity = prevState.stock[prevState.selection].quantity;
@@ -79,18 +80,26 @@ export function reducer(prevState = initialState, action) {
     // IF ITEM IS OUT OF STOCK
     if (quantity < 1) {
       newState.displayMessage = `${item} - OUT OF STOCK`;
-      return newState
+      return newState;
     }
 
     // CHANGE STOCK LEVELS
-    newState.stock = Object.assign({}, newState.stock)
+    newState.stock = Object.assign({}, newState.stock);
     newState.stock[prevState.selection] = Object.assign({}, newState.stock[prevState.selection]);
     newState.stock[prevState.selection].quantity = newState.stock[prevState.selection].quantity - 1;
     
     // DISPENSE ITEM INTO TRAY
     newState.productDispenser = prevState.selection;
 
-    return newState
+    // WORK OUT CHANGE TO BE GIVEN 
+    newState.change = Object.assign({}, newState.change);
+    const totalChange = totalCredit - itemPrice;
+    const customersChange = helper.changeCalculator(totalChange);
+
+    newState.change = customersChange;
+
+
+    return newState;
 
 
   }
