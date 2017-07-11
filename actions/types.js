@@ -1,0 +1,1 @@
+export const INSERT_COIN = 'INSERT_COIN';

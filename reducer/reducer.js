@@ -1,3 +1,5 @@
+import * as types from '../actions/types';
+
 export const initialState = {
   stock: {
     'A1': {
@@ -30,3 +32,16 @@ export const initialState = {
   dispenserDoorOpen: false,
   power: true
 };
+
+export function reducer(prevState = initialState, action) {
+  if (!action) return prevState;
+  if (!prevState.power) return prevState;
+
+  if (action.type === types.INSERT_COIN) {
+    const newState = Object.assign({}, prevState);
+    newState.credit = newState.credit.concat([action.coin]);
+    return newState;
+  }
+
+
+}
