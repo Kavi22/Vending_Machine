@@ -1,4 +1,5 @@
 import * as types from '../actions/types';
+import * as helper from './helperFunctions';
 
 export const initialState = {
   stock: {
@@ -59,4 +60,26 @@ export function reducer(prevState = initialState, action) {
     return newState;
   }
 
+  if (action.type === types.CONFIRM_PURCHASE) {
+    if (!action.pressed) return prevState;
+    // check that credit is more than price
+    const totalCredit = helper.sumCredit(prevState.credit);
+    const itemPrice = prevState.stock[prevState.selection].price;
+    const newState = Object.assign({}, prevState);
+
+    if (totalCredit < itemPrice) {
+      newState.displayMessage = 'PLEASE INSERT MORE MONEY';
+    }
+
+    const quantity = prevState.stock[prevState.selection].quantity;
+    const item =  prevState.stock[prevState.selection].name;
+
+
+    if (quantity < 1) {
+     newState.displayMessage = `${item} - OUT OF STOCK`;
+    }
+    return newState;
+
+  }
+ return prevState;
 }

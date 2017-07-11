@@ -1,9 +1,14 @@
-import {expect} from 'chai';
-import {reducer, initialState} from '../reducer/reducer';
+import {
+  expect
+} from 'chai';
+import {
+  reducer,
+  initialState
+} from '../reducer/reducer';
 import * as actions from '../actions/actions';
 
-describe('Reducer', ()=> {
-  it('is a function', ()=> {
+describe('Reducer', () => {
+  it('is a function', () => {
     expect(reducer).to.be.a('function');
   });
   describe('action: Insert coin', () => {
@@ -42,6 +47,85 @@ describe('Reducer', ()=> {
       const newState = reducer(initialState, action);
       expect(newState).to.not.equal(initialState);
       expect(newState.selection).to.not.equal(initialState.selection);
+    });
+  });
+  describe('action: Confirm Purchase', () => {
+    const initialState2 = {
+      stock: {
+        'A1': {
+          name: 'MarsBar',
+          quantity: 10,
+          price: 0.85
+        }
+      },
+      credit: [0.20, 0.20],
+      change: {},
+      float: {
+        '0.10': 5,
+        '0.20': 5,
+        '0.50': 10,
+        '1': 20
+      },
+      displayMessage: '',
+      selection: 'A1',
+      productDispenser: '',
+      dispenserDoorOpen: false,
+      power: true
+    };
+    it('should update the display message if more credit is required', () => {
+      const initialState3 = {
+        stock: {
+          'A1': {
+            name: 'MarsBar',
+            quantity: 10,
+            price: 0.85
+          }
+        },
+        credit: [0.20, 0.20],
+        displayMessage: '',
+        selection: 'A1',
+        power: true
+      };
+      const action = actions.confirmPurchase(true);
+      const newState = reducer(initialState3, action);
+      expect(newState.displayMessage).to.equal('PLEASE INSERT MORE MONEY');
+    });
+    it('should update the display message if item is out of stock', () => {
+      const initialState4 = {
+        stock: {
+          'A1': {
+            name: 'MarsBar',
+            quantity: 0,
+            price: 0.85
+          }
+        },
+        credit: [0.5, 0.20, 0.20],
+        displayMessage: '',
+        selection: 'A1',
+        power: true
+      };
+      const action = actions.confirmPurchase(true);
+      const newState = reducer(initialState4, action);
+      expect(newState.displayMessage).to.equal(`${initialState4.stock[initialState4.selection].name} - OUT OF STOCK`);
+    });
+    it('does not mutate the initial state', () => {
+        const initialState5 = {
+        stock: {
+          'A1': {
+            name: 'MarsBar',
+            quantity: 0,
+            price: 0.85
+          }
+        },
+        credit: [0.5, 0.20, 0.20],
+        displayMessage: '',
+        selection: 'A1',
+        power: true
+      };
+      const action = actions.confirmPurchase(true);
+      const newState = reducer(initialState5, action);
+      expect(newState).to.not.equal(initialState5);
+      expect(newState.displayMessage).to.not.equal(initialState5.displayMessage);
     });
   });
 });
