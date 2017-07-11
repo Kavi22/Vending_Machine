@@ -20,4 +20,20 @@ describe('Actions', ()=> {
       });
     });
   });
+  describe('MAKE_SELECTION', ()=> {
+    it('returns correct action', ()=> {
+      expect(actions.makeSelection('A1')).to.eql({
+        type: types.MAKE_SELECTION,
+        code: 'A1'
+      });
+    });
+  });
+  describe('CONFIRM_PURCHASE', () => {
+    it('returns correct action', () => {
+      expect(actions.confirmPurchase(true)).to.eql({
+        type: types.CONFIRM_PURCHASE,
+        pressed: true
+      });
+    });
+  });
 });

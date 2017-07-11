@@ -31,4 +31,17 @@ describe('Reducer', ()=> {
       expect(newState.stock[action.code].quantity).to.not.equal(initialState.stock[action.code].quantity);
     });
   });
+  describe('action: Make Selection', () => {
+    it('updates the state correctly', () => {
+      const action = actions.makeSelection('A1');
+      const newState = reducer(initialState, action);
+      expect(newState.selection).to.eql('A1');
+    });
+    it('does not mutate the initial state', () => {
+      const action = actions.makeSelection('A1');
+      const newState = reducer(initialState, action);
+      expect(newState).to.not.equal(initialState);
+      expect(newState.selection).to.not.equal(initialState.selection);
+    });
+  });
 });

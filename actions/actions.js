@@ -15,3 +15,16 @@ export function replenishStock(code, quantity) {
   };
 }
 
+export function makeSelection(code) {
+  return {
+    type: types.MAKE_SELECTION,
+    code
+  };
+}
+
+export function confirmPurchase(pressed) {
+  return {
+    type: types.CONFIRM_PURCHASE,
+    pressed
+  };
+}

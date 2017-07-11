@@ -52,5 +52,11 @@ export function reducer(prevState = initialState, action) {
     return newState;
   }
 
+    if (action.type === types.MAKE_SELECTION) {
+    if (!action.code) return prevState;
+    const newState = Object.assign({}, prevState);
+    newState.selection = action.code;
+    return newState;
+  }
 
 }
