@@ -109,7 +109,7 @@ describe('Reducer', () => {
       expect(newState.displayMessage).to.equal(`${initialState4.stock[initialState4.selection].name} - OUT OF STOCK`);
     });
     it('does not mutate the initial state', () => {
-        const initialState5 = {
+      const initialState5 = {
         stock: {
           'A1': {
             name: 'MarsBar',
@@ -128,7 +128,7 @@ describe('Reducer', () => {
       expect(newState.displayMessage).to.not.equal(initialState5.displayMessage);
     });
     it('updates the state with new stock levels', () => {
-        const initialState5 = {
+      const initialState5 = {
         stock: {
           'A1': {
             name: 'MarsBar',
@@ -144,10 +144,29 @@ describe('Reducer', () => {
       const action = actions.confirmPurchase(true);
       const newState = reducer(initialState5, action);
       expect(newState.stock[initialState5.selection]).to.eql({
+        name: 'MarsBar',
+        quantity: 9,
+        price: 0.85
+      });
+    });
+    it('updates state of productDispenser with despensed item', () => {
+      const initialState5 = {
+        stock: {
+          'A1': {
             name: 'MarsBar',
-            quantity: 9,
+            quantity: 10,
             price: 0.85
-          });
+          }
+        },
+        credit: [0.5, 0.20, 0.20],
+        displayMessage: '',
+        selection: 'A1',
+        productDispenser: '',
+        power: true
+      };
+      const action = actions.confirmPurchase(true);
+      const newState = reducer(initialState5, action);
+      expect(newState.productDispenser).to.equal('A1');
     });
   });
 });
