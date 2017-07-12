@@ -6,6 +6,8 @@ const StockList = () => (
     <StockItem />
     <StockItem />
     <StockItem />
+
+
   </div>
 );
 

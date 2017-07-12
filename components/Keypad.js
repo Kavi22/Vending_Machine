@@ -7,6 +7,7 @@ const Keypad = () => (
     <KeypadButton />
      <KeypadButton /> 
      <KeypadButton />
+     <button>Confirm</button>
   </div>
 );
 
