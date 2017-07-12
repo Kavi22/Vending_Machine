@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./spec --fix --compilers js:babel-core/register"
+    "test": "mocha ./spec --compilers js:babel-core/register",
+    "dev": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,20 @@
     "babel-register": "^6.24.1",
     "chai": "^4.0.2",
     "mocha": "^3.4.2",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "save": "^2.3.1"
+  },
+  "dependencies": {
+    "babel-loader": "^7.1.1",
+    "babel-preset-react": "^6.24.1",
+    "bulma": "^0.4.3",
+    "css-loader": "^0.28.4",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.1",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.2.0",
+    "webpack-dev-server": "^2.5.1"
   }
 }
