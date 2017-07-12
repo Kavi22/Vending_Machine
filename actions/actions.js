@@ -28,3 +28,10 @@ export function confirmPurchase(pressed) {
     pressed
   };
 }
+
+export function takeItem(itemTaken) {
+  return {
+    type: types.TAKE_ITEM,
+    itemTaken
+  };
+}

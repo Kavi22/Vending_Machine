@@ -137,6 +137,13 @@ describe('Reducer', () => {
           }
         },
         credit: [0.5, 0.20, 0.20],
+        float: {
+          '0.5': 5,
+          '0.10': 5,
+          '0.20': 5,
+          '0.50': 10,
+          '1': 20
+        },
         displayMessage: '',
         selection: 'A1',
         power: true
@@ -159,6 +166,13 @@ describe('Reducer', () => {
           }
         },
         credit: [0.5, 0.20, 0.20],
+        float: {
+          '0.5': 5,
+          '0.10': 5,
+          '0.20': 5,
+          '0.50': 10,
+          '1': 20
+        },
         displayMessage: '',
         selection: 'A1',
         productDispenser: '',
@@ -168,36 +182,69 @@ describe('Reducer', () => {
       const newState = reducer(initialState5, action);
       expect(newState.productDispenser).to.equal('A1');
     });
-  });
-
-  it('updates state with correct change', () => {
-    const initialState5 = {
-      stock: {
-        'A1': {
-          name: 'MarsBar',
-          quantity: 10,
-          price: 0.85
-        }
-      },
-      credit: [0.5, 0.5],
-      change: {},
-      float: {
-        '0.5': 5,
-        '0.10': 5,
-        '0.20': 5,
-        '0.50': 10,
-        '1': 20
-      },
-      displayMessage: '',
-      selection: 'A1',
-      productDispenser: '',
-      power: true
-    };
-    const action = actions.confirmPurchase(true);
-    const newState = reducer(initialState5, action);
-    expect(newState.change).to.eql({
+    it('updates state with correct change', () => {
+      const initialState5 = {
+        stock: {
+          'A1': {
+            name: 'MarsBar',
+            quantity: 10,
+            price: 0.85
+          }
+        },
+        credit: [0.5, 0.5],
+        change: {},
+        float: {
+          '0.5': 5,
+          '0.10': 5,
+          '0.20': 5,
+          '0.50': 10,
+          '1': 20
+        },
+        displayMessage: '',
+        selection: 'A1',
+        productDispenser: '',
+        power: true
+      };
+      const action = actions.confirmPurchase(true);
+      const newState = reducer(initialState5, action);
+      expect(newState.change).to.eql({
         '0.10': 1,
         '0.05': 1
       });
+    });
+    it('updates float with credit and gives out change', () => {
+      const initialState6 = {
+        stock: {
+          'A1': {
+            name: 'MarsBar',
+            quantity: 10,
+            price: 0.85
+          }
+        },
+        credit: [0.50, 0.50],
+        change: {},
+        float: {
+          '0.05': 5,
+          '0.10': 5,
+          '0.20': 5,
+          '0.50': 10,
+          '1': 20
+        },
+        displayMessage: '',
+        selection: 'A1',
+        productDispenser: '',
+        power: true
+      };
+      const action = actions.confirmPurchase(true);
+      const newState = reducer(initialState6, action);
+      expect(newState.float).to.eql({
+          '0.05': 4,
+          '0.10': 4,
+          '0.20': 5,
+          '0.50': 12,
+          '1': 20
+        });
+    });
   });
+  
 });

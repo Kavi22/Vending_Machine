@@ -22,7 +22,7 @@ export const initialState = {
   credit: [],
   change: {},
   float: {
-    '0.5' : 5,
+    '0.5': 5,
     '0.10': 5,
     '0.20': 5,
     '0.50': 10,
@@ -87,21 +87,43 @@ export function reducer(prevState = initialState, action) {
     newState.stock = Object.assign({}, newState.stock);
     newState.stock[prevState.selection] = Object.assign({}, newState.stock[prevState.selection]);
     newState.stock[prevState.selection].quantity = newState.stock[prevState.selection].quantity - 1;
-    
+
     // DISPENSE ITEM INTO TRAY
     newState.productDispenser = prevState.selection;
 
-    // WORK OUT CHANGE TO BE GIVEN 
+    // ADD CREDIT TO FLOAT THEN:
+    newState.float = Object.assign({}, newState.float)
+    const creditToBeAdded = helper.addCreditToFloat(prevState.credit, prevState.float);
+    newState.float = creditToBeAdded;
+
+
+    // // WORK OUT CHANGE TO BE GIVEN 
     newState.change = Object.assign({}, newState.change);
     const totalChange = totalCredit - itemPrice;
     const customersChange = helper.changeCalculator(totalChange);
 
-    newState.change = customersChange;
+    if (helper.checkFloat(customersChange, newState.float)) {
+      newState.change = customersChange;
+      newState.displayMessage = 'Please take your change';
+      const floatMinusChange = helper.floatMinusChange(newState.change, newState.float);
+      newState.float = floatMinusChange;
+    }
+    newState.dispenserDoorOpen = true;
+    return newState;
+  }
+  if (action.type === types.TAKE_ITEM) {
+    if (!action.itemTaken) return prevState;
+    const newState = Object.assign({}, prevState);
+    newState.selection = '';
+    newState.credit = [];
+    newState.displayMessage = '';
+    newState.change = {};
+    newState.productDispenser = '';
+    newState.dispenserDoorOpen = false;
 
 
     return newState;
-
-
   }
   return prevState;
 }
+

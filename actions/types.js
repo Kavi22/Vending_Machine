@@ -2,3 +2,4 @@ export const INSERT_COIN = 'INSERT_COIN';
 export const REPLENISH_STOCK = 'REPLENISH_STOCK';
 export const MAKE_SELECTION = 'MAKE_SELECTION';
 export const CONFIRM_PURCHASE = 'CONFIRM_PURCHASE';
+export const TAKE_ITEM = 'TAKE_ITEM';
